@@ -8,36 +8,44 @@ import math
 # ------------------------------
 # 1) Conexión e inicialización
 # ------------------------------
+#------------------------------------------------
 RDK = Robolink()
 
-# Selecciona robot (popup si hay varios)
+# Elegir un robot (si hay varios, aparece un popup)
 robot = RDK.ItemUserPick("Selecciona un robot", ITEM_TYPE_ROBOT)
+home = RDK.Item("Target HOME2", ITEM_TYPE_TARGET)
 if not robot.Valid():
     raise Exception("No se ha seleccionado un robot válido.")
 
-# Intenta usar el WorkObject y la herramienta con los mismos nombres que en RAPID
-frame = RDK.Item("Workobject_1", ITEM_TYPE_FRAME)
-if frame.Valid():
-    robot.setPoseFrame(frame)
-else:
-    print("Aviso: No se encontró el frame 'Workobject_1'. Se usará el frame actual del robot.")
+# Conectar al robot físico
+#if not robot.Connect():
+#    raise Exception("No se pudo conectar al robot. Verifica que esté en modo remoto y que la configuración sea correcta.")
 
-tool = RDK.Item("Acople_marcador", ITEM_TYPE_TOOL)
-if tool.Valid():
-    robot.setPoseTool(tool)
-else:
-    print("Aviso: No se encontró la herramienta 'Acople_marcador'. Se mantiene la herramienta activa.")
+# Confirmar conexión
+#if not robot.ConnectedState():
+#    raise Exception("El robot no está conectado correctamente. Revisa la conexión.")
 
-# Velocidad y blending equivalentes a v400, z10 de RAPID
-robot.setSpeed(400)       # mm/s
-robot.setRounding(10.0)   # mm (equivalente a zona z10)
+print("Robot conectado correctamente.")
+robot.MoveJ(home)
+# ------------------------------
+# Velocidad y blending (rápida, igual para todo)
+# ------------------------------
+# v_lin [mm/s], v_joint [deg/s], a_lin [mm/s^2], a_joint [deg/s^2]
+V_LIN_FAST   = 400.0
+V_JOINT_FAST = 180.0
+A_LIN_FAST   = 3000.0
+A_JOINT_FAST = 720.0
+ZONE_MM      = 10.0   # equivalente a z10
+
+robot.setSpeed(V_LIN_FAST, V_JOINT_FAST, A_LIN_FAST, A_JOINT_FAST)
+robot.setRounding(ZONE_MM)
 
 # Alturas/ajustes
 z_surface = 0.0   # plano de dibujo
 z_safe    = 30.0  # altura segura
 offset_xy  = (-150.0, -120.0)  # 1ra pasada
-offset_xy2 = (130.0, -120.0)  # 2da pasada (dejado igual a tu script)
-scale     = 1.5                # escala uniforme del texto
+offset_xy2 = (130.0, -120.0)   # 2da pasada (dejado igual a tu script)
+scale     = 1.5                 # escala uniforme del texto
 
 # ------------------------------
 # 2) Puntos de SERGIO (orden RAPID)
@@ -45,10 +53,9 @@ scale     = 1.5                # escala uniforme del texto
 # ------------------------------
 pts_base = [
     (0,0,0),(0,18,0),(2,20,0),(21.75,20,0),(23.75,18,0),(23.75,9.5,0),
-    (25.75,7.5,0),(30.5,7.5,0),(32.5,9.5,0),(32.5,25,0),(0,25,0),
-    (0,45,0),(7.5,45,0),(7.5,34.5,0),(9.5,32.5,0),(14.25,32.5,0),
+    (25.75,7.5,0),(30.5,7.5,0),(32.5,9.5,0),(32.5,25,0),
+    (0,25,0),(0,45,0),(7.5,45,0),(7.5,34.5,0),(9.5,32.5,0),(14.25,32.5,0),
     (16.25,34.5,0),(16.25,45,0),(23.75,45,0),
-    # Target_240 con Z=42 se omite para no levantar
     (23.75,34.5,0),(25.75,32.5,0),(30.5,32.5,0),(32.5,34.5,0),(32.5,50,0),
     (0,50,0),(0,57.5,0),(16.25,57.5,0),(0,62.5,0),(0,70,0),
     (16.25,65,0),(16.25,57.5,0),(23.75,57.5,0),(23.75,60.5,0),(25.75,62.5,0),
@@ -56,7 +63,6 @@ pts_base = [
     (18.25,70,0),(32.5,70,0),(32.5,75,0),(2,75,0),(0,77,0),
     (0,93,0),(2,95,0),(21.75,95,0),(23.75,93,0),(23.75,84.5,0),
     (16.25,84.5,0),(14.25,82.5,0),(9.5,82.5,0),(7.5,84.5,0),
-    # Target_581 no existe: omitido
     (9.5,87.5,0),(14.25,87.5,0),(16.25,85.5,0),(16.25,84.5,0),
     (23.75,84.5,0),(25.75,82.5,0),(30.5,82.5,0),(32.5,84.5,0),
     (32.5,106.25,0),(7.5,106.25,0),(7.5,100,0),(0,100,0),
@@ -86,6 +92,10 @@ def draw_polyline(points, z_up=z_safe, z_down=z_surface):
     """Aproxima por Z al primer punto, traza MoveL continuo y sale por Z."""
     if len(points) < 2:
         return
+    # Garantiza que seguimos en modo rápido
+    robot.setSpeed(V_LIN_FAST, V_JOINT_FAST, A_LIN_FAST, A_JOINT_FAST)
+    
+
     x0, y0, _ = points[0]
     # Aproximación
     robot.MoveJ(transl(x0, y0, z_up) * R_id)
@@ -109,7 +119,7 @@ draw_polyline(pts_sergio_2, z_up=z_safe, z_down=z_surface)
 # ------------------------------
 origin_butterfly = (0.0, 0.0)   # parte desde (0,0)
 scale_butterfly  = 30.0         # mm/ud polar (ajusta tamaño si deseas)
-samples          = 1500         # suavidad de la curva
+samples          = 500         # suavidad de la curva
 theta_max        = 12*math.pi   # rango típico de la mariposa
 angle_rot        = math.pi/2    # +90° CCW
 
@@ -130,6 +140,7 @@ for i in range(samples+1):
     
     pts_butterfly.append((xr, yr, z_surface))
 
+# Traza mariposa con la misma velocidad rápida
 draw_polyline(pts_butterfly, z_up=z_safe, z_down=z_surface)
-
-print("Trayectorias completadas: SERGIO x2 y mariposa.")
+robot.MoveJ(home)
+print("Trayectorias completadas: SERGIO x2 y mariposa (todas a velocidad rápida).")
