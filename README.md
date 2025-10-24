@@ -51,9 +51,7 @@ Cuadro comparativo detallado de las características técnicas del Motoman MH6 y
 
 ## Diferencias en el home en el Motoman MH6
 
-Descripci´on de las configuraciones home1 y home2 del Motoman MH6, indicando la posici´on de cada articulación, ¿Cual posici´on es mejor?, justifique su respuesta.
-
-El Motoman MH6 cuenta con dos home, HOME1 y HOME2.
+ El Motoman MH6 cuenta con dos home, HOME1 y HOME2.
 
 * El HOME1 está orientado a la configuración del robot para transporte o almacenamiento durante largas jornadas sin trabajo, es una posición en la que los ejes se encuentran retraidos en su totalidad para disminuir las fuerzas sobre los frenos y el espacio que ocupa el robot.
 * El HOME2 está diseñado para cuando el robot se encuentra preparado para trabajar, con el fin de ejecutar sus tareas con facilidad y menores desplazamientos que los que tendría que hacer en HOME1 y facilitar el mantenimiento.
@@ -126,14 +124,29 @@ Además, RoboDK funciona como un gemelo digital (digital twin) del manipulador, 
 ## Programación de trayectoria polar
 
 ### Diagrama de flujo de acciones del robot
+```mermaid
+ flowchart TD
+    A([Inicio]) --> B[Conectar con RoboDK]
+    B --> C[Seleccionar robot]
+    C --> D{Robot valido?}
+    D -->|No| E[Error: robot no valido]
+    D -->|Si| F[Ir al target HOME2]
+    F --> G[Configurar velocidades y aceleraciones]
+    G --> H[Definir offsets y escala]
+    H --> I[Generar puntos de SERGIO/trayectoria de nombre]
+    I --> J[Dibujar SERGIO dos veces]
+    J --> K[Calcular puntos de mariposa]
+    K --> L[Dibujar mariposa]
+    L --> M[Volver a HOME2]
+    M --> N([Fin])
 
-Plano de planta de la ubicaci´on de cada uno de los elementos
+```
 
-Código desarrollado en RoboDK para ejecutar una trayectoria polar, adjuntado como anexo dentro del repo
-sitorio.
+### Plano de planta de la ubicacion de cada uno de los elementos
 
-Video de simulaci´on en RoboDK mostrando la trayectoria polar y evidencia de su implementaci´on en el
-manipulador Motoman de forma f´ısica, controlado desde el PC.
+### Código desarrollado en RoboDK para ejecutar una trayectoria polar, adjuntado como anexo dentro del repositorio.
+
+### Video de simulacion en RoboDK mostrando la trayectoria polar y evidencia de su implementacion en el manipulador Motoman de forma fısica, controlado desde el PC.
 
 
 
