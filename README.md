@@ -124,7 +124,7 @@ Además, RoboDK funciona como un gemelo digital (digital twin) del manipulador, 
 ## Programación de trayectoria polar
 
 ### Diagrama de flujo de acciones del robot
-mermaid
+```mermaid
  flowchart TD
     A([Inicio]) --> B[Conectar con RoboDK]
     B --> C[Seleccionar robot]
@@ -139,8 +139,9 @@ mermaid
     K --> L[Dibujar mariposa]
     L --> M[Volver a HOME2]
     M --> N([Fin])
+```
 
-
+### Plano de planta de la ubicacion de cada uno de los elementos
 ![Plano de planta](img/Plano_Planta.png)\
 Plano de planta de la ubicación de cada uno de los elementos.
 
@@ -149,8 +150,10 @@ Vista de distancia del WorkObject y la mesa
 
 Como se puede ver, el software indica que la WorkObject del plano donde se dibuja se encuentra a una distancia X=993mm, Y=-34mm, Z=77mm y con una rotación de -180 en X y de -30 en Y, con respecto a la base del robot.
 
+### Código desarrollado en RoboDK para ejecutar una trayectoria polar, adjuntado como anexo dentro del repositorio.
+[Anexo codigo](./codigo_python.py)\
 Código desarrollado en RoboDK para ejecutar una trayectoria polar
-python
+```python
 from robodk.robolink import *     # API RoboDK
 from robodk.robomath import *     # utilidades de transformación
 import math
@@ -292,11 +295,12 @@ for i in range(samples+1):
 draw_polyline(pts_butterfly, z_up=z_safe, z_down=z_surface)
 robot.MoveJ(home)
 print("Trayectorias completadas: SERGIO x2 y mariposa (todas a velocidad rápida).")
+```
 
 
 
 
-Video de simulación en RoboDK mostrando la trayectoria polar y evidencia de su implementación en el manipulador Motoman de forma física, controlado desde el PC.
+### Video de simulacion en RoboDK mostrando la trayectoria polar y evidencia de su implementacion en el manipulador Motoman de forma fısica, controlado desde el PC.
 
 [Aquí se puede ver el video de la simulacion:](https://drive.google.com/file/d/1iuzeHvYXCrc1Aiu5uS5aBvG-MUil6M6l/view?usp=drive_link)
 
@@ -312,10 +316,10 @@ Video de simulación en RoboDK mostrando la trayectoria polar y evidencia de su 
   <source src="https://drive.google.com/file/d/1L1ukfGe2Bonk_mbMSGQEHVqtfuFvAqZY/view?usp=drive_link" type="video/mp4">
   Tu navegador no soporta video HTML5.
 </video>
-```
+ 
 
-### Plano de planta de la ubicacion de cada uno de los elementos
+ 
 
-### Código desarrollado en RoboDK para ejecutar una trayectoria polar, adjuntado como anexo dentro del repositorio.
+ 
 
-### Video de simulacion en RoboDK mostrando la trayectoria polar y evidencia de su implementacion en el manipulador Motoman de forma fısica, controlado desde el PC.
+ 
