@@ -41,7 +41,13 @@ Cuadro comparativo detallado de las características técnicas del Motoman MH6 y
 | **Temperatura de operación**  | 0°C a +45°C| 0°C a +45°C|
 | **Peso**| 130 kg  | 240 kg |
 | **Tipo de montaje** | Piso, Techo, Pared | Piso, Techo |
+### 🔗 Referencias
 
+- [Yaskawa Motoman MH6 – Robots.com](https://www.robots.com/industrial-robots/motoman-mh6)  
+- [Yaskawa MH6D/MH6F – Yaskawa Europe PDF](https://pdf.directindustry.com/pdf/yaskawa-europe-gmbh/mh6d-mh6f/14473-309337.html)  
+- [ABB IRB 140 Product Specification – ABB Library (3HAC041346)](https://library.e.abb.com/public/a7121292272d40a9992a50745fdaa3b2/3HAC041346%20PS%20IRB%20140-en.pdf)  
+- [ABB IRB 140 Datasheet – Manuallib.com](https://www.manuallib.com/download/pdf/2014/0624/abb-irb140-industrial-robot-datasheet.pdf)  
+- [IRB 140 Product Manual Type C – Scribd](https://www.scribd.com/document/649705967/IRB-140-Type-C-Product-Manual-3HAC027400-001-RevC-En)
 
 ## Diferencias en el home en el Motoman MH6
 
