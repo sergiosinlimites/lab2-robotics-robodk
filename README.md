@@ -21,34 +21,58 @@ cartesianos, traslaciones y rotaciones).
 * Diseñar y ejecutar una trayectoria polar en RoboDK y realizar su implementacion fısica en el manipulador Motoman.
 
 ## Comparación especificaciones técnicas Motoman MH6 y ABB IRB140
- 
- 
-
-### 🔗 Referencias
-
-- [Yaskawa Motoman MH6 – Robots.com](https://www.robots.com/industrial-robots/motoman-mh6)  
-- [Yaskawa MH6D/MH6F – Yaskawa Europe PDF](https://pdf.directindustry.com/pdf/yaskawa-europe-gmbh/mh6d-mh6f/14473-309337.html)  
-- [ABB IRB 140 Product Specification – ABB Library (3HAC041346)](https://library.e.abb.com/public/a7121292272d40a9992a50745fdaa3b2/3HAC041346%20PS%20IRB%20140-en.pdf)  
-- [ABB IRB 140 Datasheet – Manuallib.com](https://www.manuallib.com/download/pdf/2014/0624/abb-irb140-industrial-robot-datasheet.pdf)  
-- [IRB 140 Product Manual Type C – Scribd](https://www.scribd.com/document/649705967/IRB-140-Type-C-Product-Manual-3HAC027400-001-RevC-En)
+Cuadro comparativo detallado de las características técnicas del Motoman MH6 y el IRB140, incluyendo carga máxima, alcance, número de grados de libertad, velocidad, aplicaciones típicas, etc
 
 
+| **Características** | **Motoman MH6** | **ABB IRB140** |
+|---------------------|-----------------|----------------|
+| **Carga máxima**    | 6 kg            | 6 kg           |
+| **Alcance máximo (horizontal)** | 1422 mm | 700 mm  |
+| **Alcance máximo (vertical)**   | 2486 mm | 1050 mm |
+| **Número de grados de libertad**| 6       | 6       |
+| **Repetibilidad**               | ± 0.08 mm | ± 0.05 mm |
+| **Velocidad máxima (S)** | 220°/s | 150°/s  |
+| **Velocidad máxima (L)**  | 200°/s   | 120°/s  |
+| **Velocidad máxima (U)** | 220°/s | 120°/s  |
+| **Velocidad máxima (R)** | 410°/s | 180°/s  |
+| **Velocidad máxima (B)** | 410°/s | 180°/s  |
+| **Velocidad máxima (T)** | 610°/s | 220°/s  |
+| **Aplicaciones típicas** | Manipulación de materiales, procesamiento, etc. | Manipulación, ensamblaje, soldadura, etc.  |
+| **Temperatura de operación**  | 0°C a +45°C| 0°C a +45°C|
+| **Peso**| 130 kg  | 240 kg |
+| **Tipo de montaje** | Piso, Techo, Pared | Piso, Techo |
 
-## Diferencias en el home
 
-Descripci´on de las configuraciones home1 y home2 del Motoman MH6, indicando la posici´on de cada articu
-laci´on, ¿Cual posici´on es mejor?, justifique su respuesta.
+## Diferencias en el home en el Motoman MH6
 
+Descripci´on de las configuraciones home1 y home2 del Motoman MH6, indicando la posici´on de cada articulación, ¿Cual posici´on es mejor?, justifique su respuesta.
+
+El Motoman MH6 cuenta con dos home, HOME1 y HOME2.
+
+* El HOME1 está orientado a la configuración del robot para transporte o almacenamiento durante largas jornadas sin trabajo, es una posición en la que los ejes se encuentran retraidos en su totalidad para disminuir las fuerzas sobre los frenos y el espacio que ocupa el robot.
+* El HOME2 está diseñado para cuando el robot se encuentra preparado para trabajar, con el fin de ejecutar sus tareas con facilidad y menores desplazamientos que los que tendría que hacer en HOME1 y facilitar el mantenimiento.
 
 ## Movimiento manual, tipos de procedimiento y procedimiento
 Procedimiento detallado para realizar movimientos manuales, especificando c´omo cambiar entre modos de
 operaci´on (articulaciones, cartesiano) y realizar traslaciones y rotaciones en los ejes X, Y, Z.
+![Teach Pendant](img/Teach_Pendant.png) \
+Teach pendant
+![Interfaz del Teach Pendant](img/HMI.png) \
+Interfaz del Teach Pendant
 
+1. Dejar el Teach Pendant en modo Teach, y desactivar el botón de emergencia.
+2. Definir la velocidad (Slow, Fast, High Speed)
+3. Llevar el robot a HOME2 SERVO ON (Botón) > Robot > SECOND HOME POS > Botón hombre muerto + FWD (botón)
+4. COORD (Botón) y elegir la opción Joint Coordinates (Robot) o Cartesian Coordinates (Marco de coordenadas), también se puede seleccionar algun otro tipo pero estas son las principales de movimiento articular y movimiento cartesiano.
+
+![Movimientos Motoman](img/Movimientos_Motoman.png)
 
 ## Niveles de velocidad
 
 Explicaci´on completa sobre los niveles de velocidad para movimientos manuales, el proceso para cambiar entre
 niveles y c´omo identificar el nivel establecido en la interfaz del robot.
+![Velocidades](img/Velocidades.png)
+El robot tiene 4 modos de velocidad a utilizar, lento, medio y alto, tal como se ve en la imagen, y se cambia entre estos modos con los botones del Teach Pendant SLOW, FAST y HIGH SPEED.
 
 
 ## Aplicaciones  Principales
